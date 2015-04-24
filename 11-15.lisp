@@ -182,3 +182,23 @@
   (subseq (write-to-string (reduce #'+ nums)) 0 target))
 
 ;; Problem 14
+(defun gen-collatz-count (n &optional (count 1))
+  (cond
+    ((= n 1)
+     count)
+    ((evenp n)
+     (gen-collatz-count (/ n 2) (1+ count)))
+    (t
+     (gen-collatz-count (1+ (* 3 n)) (1+ count)))))
+
+(defun euler14 (&optional (n 999999) (res-n 0) (res-c 0))
+  (let ((this-c (gen-collatz-count n)))
+    (cond
+      ((< n 500001)
+       res-n)
+      ((>= this-c res-c)
+       (euler14 (- n 2) n this-c))
+      (t
+       (euler14 (- n 2) res-n res-c)))))
+
+;; Problem 15 (Didn't need to code this one)
